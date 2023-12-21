@@ -2,10 +2,12 @@ import { Link, useNavigate } from "react-router-dom";
 import image from "../../assets/Mobile login-pana.png";
 import { FcGoogle } from "react-icons/fc";
 import useAuth from "../../Hooks/useAuth";
+import useAxios from "../../Hooks/useAxios";
 
 const Register = () => {
   const { register, profile } = useAuth();
   const navigate = useNavigate();
+  const axios = useAxios()
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -28,19 +30,29 @@ const Register = () => {
     // .then(data => console.log(data))
     // .catch(error => console.error('Error uploading image:', error));
 
-    // register(email, password)
-    //   .then(() => {
-    //     profile(name, image)
-    //       .then(() => {
-    //         navigate("/");
-    //       })
-    //       .catch((err) => {
-    //         console.log(err.message);
-    //       });
-    //   })
-    //   .catch((err) => {
-    //     console.log(err.message);
-    //   });
+    register(email, password)
+      .then(() => {
+        profile(name, image)
+          .then(() => {
+            const user = {
+                name,
+                image,
+                email,
+                role
+            }
+            axios.post('/users',user)
+            .then(res=>{
+                console.log(res.data);
+            })
+            navigate("/");
+          })
+          .catch((err) => {
+            console.log(err.message);
+          });
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
   };
 
   return (
