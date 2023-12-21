@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
-import {FcGoogle} from 'react-icons/fc'
 import image from '../../assets/Developer activity-bro.png'
 import useAuth from "../../Hooks/useAuth";
+import SocileLogin from "../../Component/SocileLogin/SocileLogin";
 
 const Login = () => {
     const {login} = useAuth();
@@ -66,12 +66,7 @@ const Login = () => {
               />
             </form>
             <p className="my-2 text-center font-medium">or</p>
-            <button className="w-full flex items-center justify-center gap-2 py-3 rounded border-black border font-medium cursor-pointer text-lg">
-              <p className="text-2xl">
-                <FcGoogle />
-              </p>
-              <p>Sign in with Google</p>
-            </button>
+            <SocileLogin/>
             <p className="font-bold mt-1">
               Dont have any Account?
               <Link to="/register" className="text-red-600">

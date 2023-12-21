@@ -1,8 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import image from "../../assets/Mobile login-pana.png";
-import { FcGoogle } from "react-icons/fc";
 import useAuth from "../../Hooks/useAuth";
 import useAxios from "../../Hooks/useAxios";
+import SocileLogin from "../../Component/SocileLogin/SocileLogin";
 
 const Register = () => {
   const { register, profile } = useAuth();
@@ -145,12 +145,7 @@ const Register = () => {
           />
         </form>
         <p className="my-2 text-center font-medium">or</p>
-        <button className="w-full flex items-center justify-center gap-2 py-2 rounded border-black border font-medium cursor-pointer text-lg">
-          <p className="text-xl">
-            <FcGoogle />
-          </p>
-          <p>Sign in with Google</p>
-        </button>
+        <SocileLogin/>
         <p className="font-bold mt-1">
           Already have an Account?
           <Link to="/login" className="text-red-600">

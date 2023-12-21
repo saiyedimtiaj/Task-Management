@@ -23,7 +23,7 @@ const Members = () => {
                             <h1 className="text-xl font-semibold mb-5">{user?.name}</h1>
                             <span className="text-sm text-white font-medium px-3  py-1 bg-blue-700 rounded-2xl">{user?.role}</span>
                         </div>
-                    </div>)
+                    </div>).slice(0,4)
                 }
             </div>
         </div>

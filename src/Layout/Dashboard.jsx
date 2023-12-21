@@ -1,4 +1,5 @@
 // import { Outlet } from "react-router-dom";
+import DashboardContent from "../Component/DashboardContent/DashboardContent";
 import Sidebar from "../Component/Sidebar/Sidebar";
 
 const Dashboard = () => {
@@ -7,9 +8,9 @@ const Dashboard = () => {
       <div className="lg:flex">
         <Sidebar />
         {/* Add your main content here */}
-        <div className="flex-1 p-8">
+        <div className="flex-1 px-3 py-2">
           {/* Your main content goes here */}
-          <h1>Main Content</h1>
+          <DashboardContent/>
         </div>
       </div>
     </div>
