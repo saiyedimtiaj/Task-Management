@@ -3,6 +3,7 @@ import useAxios from "../../Hooks/useAxios";
 import useAuth from "../../Hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
+import { FaTrashCan } from "react-icons/fa6";
 
 const DashboardContent = () => {
   const {
@@ -13,7 +14,7 @@ const DashboardContent = () => {
   const axios = useAxios();
   const { user } = useAuth();
 
-  const { data: allTask = [],refetch } = useQuery({
+  const { data: allTask = [], refetch } = useQuery({
     queryKey: ["alltask", user],
     queryFn: () =>
       axios.get(`/alltask?email=${user?.email}`).then((res) => res.data),
@@ -29,7 +30,7 @@ const DashboardContent = () => {
       email: user?.email,
     };
     axios.post("/alltask", task).then(() => {
-        refetch()
+      refetch();
       toast("Add Task Sucessfully", {
         icon: "👏",
         style: {
@@ -39,6 +40,67 @@ const DashboardContent = () => {
       });
     });
   };
+
+  const to_do = allTask.filter((task)=>task.status === 'to-do')
+  const ongoing = allTask.filter((task)=>task.status === 'ongoing')
+  const completed = allTask.filter((task)=>task.status === 'completed')
+
+
+  const dragStarted = (e, id) => {
+    console.log("drag has been started");
+    e.dataTransfer.setData("todoId", id);
+  };
+
+  const dragingOver = (e) => {
+    e.preventDefault()
+    console.log('draging over now');
+  }
+
+  const dragDroppedTodo = (e,status) => {
+    console.log('you are drop now');
+    let tanasperTaskId = e.dataTransfer.getData('todoid')
+    console.log(tanasperTaskId,status);
+    axios.put(`/alltask/${tanasperTaskId}`,{status:status})
+    .then(res=>{
+      console.log(res.data);
+      refetch()
+    })
+  }
+ 
+  const dragDroppedOngoing = (e,status) => {
+    console.log('you are drop now');
+    let tanasperTaskId = e.dataTransfer.getData('todoid')
+    console.log(tanasperTaskId,status);
+    axios.put(`/alltask/${tanasperTaskId}`,{status:status})
+    .then(res=>{
+      console.log(res.data);
+      refetch()
+    })
+  }
+  const dragDroppedCompleted = (e,status) => {
+    console.log('you are drop now');
+    let tanasperTaskId = e.dataTransfer.getData('todoid')
+    console.log(tanasperTaskId,status);
+    axios.put(`/alltask/${tanasperTaskId}`,{status:status})
+    .then(res=>{
+      console.log(res.data);
+      refetch()
+    })
+  }
+
+  const handleDelete = id => {
+    axios.delete(`/alltask/${id}`)
+    .then(()=>{
+      refetch();
+      toast("Task Deleted Sucessfully", {
+        icon: "👏",
+        style: {
+          background: "#333",
+          color: "#fff",
+        },
+      });
+    })
+  }
 
 
 
@@ -109,22 +171,53 @@ const DashboardContent = () => {
         />
       </form>
       <div className="grid grid-cols-3 gap-4 mt-5">
-        <div>
-          <h1 className="text-2xl font-semibold">TO-DO</h1>
-          <div className="border-2 border-black">
-            {allTask?.map((task) => (
-              <div key={task?._id} className="border-blue-600 border-2 m-2 p-2">
+        <div onDragOver={(e)=>dragingOver(e)} onDrop={(e)=>dragDroppedTodo(e,'to-do')} className="bg-[#E3DEFC] p-3 rounded-md">
+          <h1 className="text-2xl font-semibold mb-2">TO-DO</h1>
+          {to_do?.map((task) => (
+            <div key={task?._id}
+              draggable
+              onDragStart={(e) => dragStarted(e, task._id)}
+              className="bg-[#FCEEDF] mb-2 rounded-md p-2"
+            >
+              <div className="flex justify-between items-center mb-2">
                 <h1 className="text-xl font-medium">{task?.title}</h1>
-                <p className="text-sm leading-4">{task?.descriptions}</p>
+                <button onClick={()=>handleDelete(task?._id)} className="text-xl text-red-700"><FaTrashCan/></button>
               </div>
-            ))}
-          </div>
+              <p className="text-sm leading-4">{task?.descriptions}</p>
+            </div>
+          ))}
         </div>
-        <div>
+        <div onDragOver={(e)=>dragingOver(e)} onDrop={(e)=>dragDroppedOngoing(e,'ongoing')} className="bg-[#E3DEFC] p-3 rounded-md">
           <h1 className="text-2xl font-semibold uppercase">ongoing</h1>
+          {ongoing?.map((task) => (
+            <div key={task?._id}
+              draggable
+              onDragStart={(e) => dragStarted(e, task._id)}
+              className="bg-[#FCEEDF] mb-2 rounded-md p-2"
+            >
+              <div className="flex justify-between items-center mb-2">
+                <h1 className="text-xl font-medium">{task?.title}</h1>
+                <button onClick={()=>handleDelete(task?._id)} className="text-xl text-red-700"><FaTrashCan/></button>
+              </div>
+              <p className="text-sm leading-4">{task?.descriptions}</p>
+            </div>
+          ))}
         </div>
-        <div>
-          <h1 className="text-2xl font-semibold uppercase">completed</h1>
+        <div onDragOver={(e)=>dragingOver(e)} onDrop={(e)=>dragDroppedCompleted(e,'completed')} className="bg-[#E3DEFC] p-3 rounded-md">
+          <h1 className="text-2xl font-semibold uppercase">Completed</h1>
+          {completed?.map((task) => (
+            <div key={task?._id}
+              draggable
+              onDragStart={(e) => dragStarted(e, task._id)}
+              className="bg-[#FCEEDF] mb-2 rounded-md p-2"
+            >
+              <div className="flex justify-between items-center mb-2">
+                <h1 className="text-xl font-medium">{task?.title}</h1>
+                <button onClick={()=>handleDelete(task?._id)} className="text-xl text-red-700"><FaTrashCan/></button>
+              </div>
+              <p className="text-sm leading-4">{task?.descriptions}</p>
+            </div>
+          ))}
         </div>
       </div>
     </>
