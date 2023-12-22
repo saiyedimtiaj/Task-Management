@@ -1,12 +1,22 @@
 import { Link } from "react-router-dom";
 import logo from "../../assets/demo_logo.png";
 import useAuth from "../../Hooks/useAuth";
+import { toast } from "react-hot-toast";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
 
   const handleLogout = () => {
     logout()
+    .then(()=>{
+      toast("Log Out Sucessfully", {
+        icon: "👏",
+        style: {
+          background: "#333",
+          color: "#fff",
+        },
+      });
+    })
   }
 
   const links = (

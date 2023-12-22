@@ -3,6 +3,7 @@ import useAuth from "../../Hooks/useAuth";
 import { useEffect, useState } from "react";
 import useAxios from "../../Hooks/useAxios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 
 const SocileLogin = () => {
@@ -16,6 +17,13 @@ const SocileLogin = () => {
         google()
         .then((res)=>{
             navigate('/')
+            toast("Log In Sucessfully", {
+                icon: "👏",
+                style: {
+                  background: "#333",
+                  color: "#fff",
+                },
+              });
             console.log(res.user);
             const isExist = allUsers.find((allUser)=>allUser.email===res.user.email)
             const userData = {

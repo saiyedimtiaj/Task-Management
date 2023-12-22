@@ -170,7 +170,7 @@ const DashboardContent = () => {
           className="bg-gray-800 px-7 py-2.5 text-white font-normal cursor-pointer"
         />
       </form>
-      <div className="grid grid-cols-3 gap-4 mt-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-5">
         <div onDragOver={(e)=>dragingOver(e)} onDrop={(e)=>dragDroppedTodo(e,'to-do')} className="bg-[#E3DEFC] p-3 rounded-md">
           <h1 className="text-2xl font-semibold mb-2">TO-DO</h1>
           {to_do?.map((task) => (
@@ -183,7 +183,8 @@ const DashboardContent = () => {
                 <h1 className="text-xl font-medium">{task?.title}</h1>
                 <button onClick={()=>handleDelete(task?._id)} className="text-xl text-red-700"><FaTrashCan/></button>
               </div>
-              <p className="text-sm leading-4">{task?.descriptions}</p>
+              <p className="text-sm leading-4 mb-2">{task?.descriptions}</p>
+              <span className="font-medium px-5 text-white bg-blue-700 rounded-2xl">{task?.priority}</span>
             </div>
           ))}
         </div>
@@ -199,7 +200,8 @@ const DashboardContent = () => {
                 <h1 className="text-xl font-medium">{task?.title}</h1>
                 <button onClick={()=>handleDelete(task?._id)} className="text-xl text-red-700"><FaTrashCan/></button>
               </div>
-              <p className="text-sm leading-4">{task?.descriptions}</p>
+              <p className="text-sm leading-4 mb-2">{task?.descriptions}</p>
+              <span className="font-medium px-5 text-white bg-blue-700 rounded-2xl">{task?.priority}</span>
             </div>
           ))}
         </div>
@@ -215,7 +217,8 @@ const DashboardContent = () => {
                 <h1 className="text-xl font-medium">{task?.title}</h1>
                 <button onClick={()=>handleDelete(task?._id)} className="text-xl text-red-700"><FaTrashCan/></button>
               </div>
-              <p className="text-sm leading-4">{task?.descriptions}</p>
+              <p className="text-sm leading-4 mb-2">{task?.descriptions}</p>
+              <span className="font-medium px-5 text-white bg-blue-700 rounded-2xl">{task?.priority}</span>
             </div>
           ))}
         </div>

@@ -3,6 +3,7 @@ import image from "../../assets/Mobile login-pana.png";
 import useAuth from "../../Hooks/useAuth";
 import useAxios from "../../Hooks/useAxios";
 import SocileLogin from "../../Component/SocileLogin/SocileLogin";
+import { toast } from "react-hot-toast";
 
 const Register = () => {
   const { register, profile } = useAuth();
@@ -45,6 +46,13 @@ const Register = () => {
                 console.log(res.data);
             })
             navigate("/");
+            toast("Register your account sucessfully", {
+              icon: "👏",
+              style: {
+                background: "#333",
+                color: "#fff",
+              },
+            });
           })
           .catch((err) => {
             console.log(err.message);

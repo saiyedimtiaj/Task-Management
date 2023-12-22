@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import image from '../../assets/Developer activity-bro.png'
 import useAuth from "../../Hooks/useAuth";
 import SocileLogin from "../../Component/SocileLogin/SocileLogin";
+import { toast } from "react-hot-toast";
 
 const Login = () => {
     const {login} = useAuth();
@@ -16,6 +17,13 @@ const Login = () => {
         login(email,password)
         .then(()=>{
             navigate('/')
+            toast("Log In Sucessfully", {
+              icon: "👏",
+              style: {
+                background: "#333",
+                color: "#fff",
+              },
+            });
         })
         .catch(err=>{
             console.log(err.message);

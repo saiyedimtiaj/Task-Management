@@ -1,13 +1,28 @@
 import { MdMenu } from "react-icons/md";
 import logo from "../../assets/demo_logo.png";
 import useAuth from "../../Hooks/useAuth";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { IoSettingsOutline } from "react-icons/io5";
+import { toast } from "react-hot-toast";
 
 const Sidebar = () => {
-  const { user } = useAuth();
+  const { user,logout } = useAuth();
+  const navigate = useNavigate()
+  const handleLogout = () => {
+    logout()
+    .then(()=>{
+      navigate('/')
+      toast("Log Out Sucessfully", {
+        icon: "👏",
+        style: {
+          background: "#333",
+          color: "#fff",
+        },
+      });
+    })
+  }
   return (
-    <div className="h-screen">
+    <div className="">
       <div className="drawer lg:drawer-open">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content flex lg:hidden w-full bg-slate-200 px-4 py-3 items-center justify-between">
@@ -58,7 +73,7 @@ const Sidebar = () => {
                 </NavLink>
               </li>
             </div>
-            <li className=" bg-gray-600 ">
+            <li onClick={handleLogout} className=" bg-gray-600 ">
               <div className="flex gap-2 items-center"><span className="text-xl"><IoSettingsOutline/></span><span className="text-lg">Log Out</span></div>
             </li>
           </ul>
